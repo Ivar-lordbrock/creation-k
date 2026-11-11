@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Sur GitHub Pages, le site est dans un sous-dossier (/creation-k/) :
+# les moteurs ne lisent pas ce fichier à cet endroit. Il servira quand le site
+# aura son propre nom de domaine. Ajouter alors :
+# Sitemap: https://NOM-DE-DOMAINE/sitemap.xml

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Plan du site pour Google (à envoyer dans Google Search Console).
+     En cas de changement d'adresse (nom de domaine), la remplacer ici.
+     La page des mentions légales n'y figure pas : elle est en « noindex ». -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://ivar-lordbrock.github.io/creation-k/</loc>
+    <lastmod>2026-11-11</lastmod>
+  </url>
+</urlset>
