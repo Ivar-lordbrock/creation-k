@@ -59,14 +59,23 @@
   };
 
   if (slides.length > 1) {
+    const FONDU = 1200; // durée du fondu en ms, la même que dans le CSS (.slide)
     let actuelle = 0;
     let minuteur = null;
 
-    const suivante = () => {
-      slides[actuelle].classList.remove('is-active');
+    const suivante = async () => {
+      const sortante = slides[actuelle];
       actuelle = (actuelle + 1) % slides.length;
-      chargerPhoto(slides[actuelle]);
-      slides[actuelle].classList.add('is-active');
+      const entrante = slides[actuelle];
+      chargerPhoto(entrante);
+      // On attend que la photo soit prête à l'affichage : sinon son décodage
+      // tombe en plein fondu et l'animation saute.
+      try { await entrante.decode(); } catch (e) { /* on l'affiche quand même */ }
+      entrante.classList.remove('is-leaving');
+      sortante.classList.replace('is-active', 'is-leaving'); // reste visible dessous
+      entrante.classList.add('is-active');                   // arrive en fondu dessus
+      // Petite marge : l'ancienne photo ne se réinitialise qu'une fois bien cachée
+      window.setTimeout(() => sortante.classList.remove('is-leaving'), FONDU + 150);
     };
 
     // Inutile de charger les autres photos si le carrousel ne tourne pas
