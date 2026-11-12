@@ -640,6 +640,9 @@ svg { width: 1.2em; height: 1.2em; flex-shrink: 0; }
   gap: 1rem;
   margin-top: clamp(3rem, 7vw, 5rem) !important;
 }
+/* Cette liste est aussi un .container : on rétablit son centrage,
+   que la remise à zéro des listes (ul[class]) supprime. */
+ul.values { margin-inline: auto; }
 .value-card {
   padding: 1.6rem 1.5rem;
   border: 1px solid rgba(228, 213, 195, .9);
