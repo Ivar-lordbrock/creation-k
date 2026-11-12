@@ -225,7 +225,7 @@ svg { width: 1.2em; height: 1.2em; flex-shrink: 0; }
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgba(250, 246, 241, .97);
+  background: var(--creme); /* opaque : rien ne doit se deviner au travers */
   border-bottom: 1px solid transparent;
   transition: border-color .3s, box-shadow .3s;
 }
@@ -473,7 +473,12 @@ svg { width: 1.2em; height: 1.2em; flex-shrink: 0; }
   border-radius: 999px 999px 30px 30px;
   background: var(--sable);
   box-shadow: var(--ombre-forte);
+  /* Les photos restent « enfermées » dans l'arche : leur superposition (z-index)
+     ne déborde pas sur le badge rond posé par-dessus. */
+  isolation: isolate;
 }
+/* Simple fondu, sans zoom : un zoom très lent sur du velours côtelé
+   fait « vibrer » les rayures et donne une impression de saccade. */
 .slide {
   position: absolute;
   inset: 0;
@@ -481,21 +486,12 @@ svg { width: 1.2em; height: 1.2em; flex-shrink: 0; }
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transform: scale(1.06);
-  /* Pas de transition sur le zoom ici : il se remet en place d'un coup,
-     seulement quand la photo est cachée sous la suivante. */
   transition: opacity 1.2s ease-in-out;
 }
-/* La photo qui arrive se pose PAR-DESSUS l'ancienne (z-index), qui reste opaque
-   pendant le fondu : pas de « creux » de luminosité au milieu du passage.
-   Le zoom est lent et régulier (linéaire) et continue dans le même sens
-   pendant que la photo s'en va : aucun à-coup. */
+/* La photo qui arrive se pose PAR-DESSUS l'ancienne, qui reste opaque
+   pendant le fondu : pas de « creux » de luminosité au milieu du passage. */
 .slide.is-active,
-.slide.is-leaving {
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 1.2s ease-in-out, transform 7s linear;
-}
+.slide.is-leaving { opacity: 1; }
 .slide.is-active { z-index: 1; }
 
 /* Badge rond qui tourne */
@@ -1256,7 +1252,6 @@ ul.values { margin-inline: auto; }
     transition-delay: 0s !important;
   }
   .js .reveal { opacity: 1; transform: none; }
-  .slide { transform: none; }
 }
 
 @media print {

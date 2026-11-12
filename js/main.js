@@ -63,14 +63,15 @@
     let actuelle = 0;
     let minuteur = null;
 
-    const suivante = async () => {
-      const sortante = slides[actuelle];
-      actuelle = (actuelle + 1) % slides.length;
-      const entrante = slides[actuelle];
+    const suivante = () => {
+      const prochaine = (actuelle + 1) % slides.length;
+      const entrante = slides[prochaine];
       chargerPhoto(entrante);
-      // On attend que la photo soit prête à l'affichage : sinon son décodage
-      // tombe en plein fondu et l'animation saute.
-      try { await entrante.decode(); } catch (e) { /* on l'affiche quand même */ }
+      // Photo pas encore arrivée (réseau lent) : on garde l'actuelle,
+      // nouvel essai au tour suivant. Jamais d'arche vide.
+      if (!(entrante.complete && entrante.naturalWidth > 0)) return;
+      const sortante = slides[actuelle];
+      actuelle = prochaine;
       entrante.classList.remove('is-leaving');
       sortante.classList.replace('is-active', 'is-leaving'); // reste visible dessous
       entrante.classList.add('is-active');                   // arrive en fondu dessus
@@ -78,8 +79,16 @@
       window.setTimeout(() => sortante.classList.remove('is-leaving'), FONDU + 150);
     };
 
-    // Inutile de charger les autres photos si le carrousel ne tourne pas
-    const prechargerPhotos = () => { if (!moinsDeMouvement.matches) slides.forEach(chargerPhoto); };
+    // Inutile de charger les autres photos si le carrousel ne tourne pas.
+    // decode() prépare chaque photo à l'avance (sans l'attendre : certains
+    // navigateurs n'y répondent jamais), pour que le 1er fondu ne saute pas.
+    const prechargerPhotos = () => {
+      if (moinsDeMouvement.matches) return;
+      slides.forEach((img) => {
+        chargerPhoto(img);
+        if (img.decode) img.decode().catch(() => {});
+      });
+    };
     if (document.readyState === 'complete') prechargerPhotos();
     else window.addEventListener('load', prechargerPhotos, { once: true });
     const demarrer = () => {
