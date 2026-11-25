@@ -12,8 +12,9 @@ L'objectif unique : donner envie, puis amener à écrire en message privé sur I
 ```
 creation-ka/
 ├── index.html              la page unique (accueil, à propos, créations, coulisses, contact)
-├── mentions-legales.html   mentions légales (zones [À COMPLÉTER] à remplir)
+├── mentions-legales.html   mentions légales (éditrice, hébergeur, commandes)
 ├── 404.html                page « introuvable » (utilisée automatiquement par l'hébergeur)
+├── CNAME                   nom de domaine pour GitHub Pages (creationdek.fr)
 ├── css/style.css           toute la mise en forme (couleurs en haut du fichier)
 ├── js/main.js              menu, carrousel, filtres, agrandissement, bouton flottant
 ├── assets/
@@ -62,10 +63,11 @@ Le bouton « Commander » ouvre Instagram et copie un message tout prêt, par ex
 Dans la section « Coulisses », changer le lien `href` (copier le lien de la vidéo depuis TikTok),
 la couverture dans `assets/img/tiktok/` (format 9:16, environ 405×720) et le petit titre.
 
-## Hébergement actuel : GitHub Pages
+## Hébergement : GitHub Pages + creationdek.fr
 
-Le site est en ligne (provisoirement) à l'adresse **https://ivar-lordbrock.github.io/creation-k/**,
-depuis le dépôt GitHub `Ivar-lordbrock/creation-k` (branche `main`, dossier racine).
+Le site est en ligne à l'adresse **https://creationdek.fr/**, publié gratuitement par GitHub Pages
+depuis le dépôt `Ivar-lordbrock/creation-k` (branche `main`, dossier racine).
+L'ancienne adresse `ivar-lordbrock.github.io/creation-k/` renvoie automatiquement vers le domaine.
 
 **Mettre à jour le site** : modifier les fichiers, puis dans ce dossier :
 
@@ -81,19 +83,27 @@ GitHub republie le site tout seul en une à deux minutes.
 (propriété « Préfixe d'URL » avec l'adresse ci-dessus) et y envoyer `sitemap.xml`.
 L'aperçu de partage se teste avec le [débogueur Facebook](https://developers.facebook.com/tools/debug/).
 
-## Passer à un nom de domaine
+## Nom de domaine creationdek.fr
 
-1. Remplacer `https://ivar-lordbrock.github.io/creation-k/` par la nouvelle adresse dans `index.html`
-   (canonical, og:url, og:image et données structurées) et dans `sitemap.xml`.
-2. `404.html` : remplacer `/creation-k/` par `/` partout.
-3. `robots.txt` : activer la ligne `Sitemap`.
-4. Relier le domaine dans GitHub (Settings → Pages → Custom domain) ou chez un autre hébergeur.
+- Acheté chez **OVH** le 25/11/2026, à renouveler chaque année (vers le 25 novembre).
+- Réglages DNS dans l'espace client OVH (Noms de domaine → creationdek.fr → Zone DNS) :
 
-## Avant la mise en ligne
+  | Type  | Sous-domaine | Cible |
+  |-------|--------------|-------|
+  | A     | (vide)       | 185.199.108.153 |
+  | A     | (vide)       | 185.199.109.153 |
+  | A     | (vide)       | 185.199.110.153 |
+  | A     | (vide)       | 185.199.111.153 |
+  | CNAME | www          | ivar-lordbrock.github.io. |
 
-- [ ] Compléter les zones `[À COMPLÉTER]` de `mentions-legales.html` (nom, statut, SIRET, adresse, e-mail, hébergeur).
-- [ ] Ajouter la ville ou la région de l'atelier dans le texte et la description, pour le référencement local.
-- [ ] Faire relire le texte « À propos » à Karine (il reprend son post « Mon histoire »).
+- Côté GitHub : Settings → Pages → Custom domain = `creationdek.fr`, case « Enforce HTTPS » cochée.
+  Le fichier `CNAME` à la racine garde ce réglage : ne pas le supprimer.
+- Changer d'adresse un jour : la remplacer dans `index.html` (canonical, og:url, og:image,
+  données structurées), `sitemap.xml`, `robots.txt` et `CNAME`.
+
+## Reste à faire
+
+- [ ] Si Création K obtient un numéro SIRET, l'ajouter dans `mentions-legales.html`.
 
 ## Contrôles déjà faits (novembre 2026)
 
